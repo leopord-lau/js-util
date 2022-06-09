@@ -6,11 +6,14 @@ test('random 传入参数小于2个', () => {
   expect(arrayFn.random()).toBeNull();
 })
 
-test('random', () => {
-  expect(arrayFn.random(1,3)).
+test('numberToChinese 2', () => {
+  expect(arrayFn.numberToChinese(2)).toStrictEqual('二')
 })
 
+test('numberToChinese 20000', () => {
+  expect(arrayFn.numberToChinese(20010)).toStrictEqual('二万一十')
+})
 
-test('numberToChinese', () => {
-  expect(arrayFn.numberToChinese(2)).toStrictEqual('二')
+test('changeToChinese 20010', () => {
+  expect(arrayFn.changeToChinese(20010.245)).toStrictEqual('贰万零壹拾元贰角肆分')
 })
