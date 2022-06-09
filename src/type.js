@@ -320,7 +320,7 @@ export default class TypeFn {
    * @returns {Boolean}
    */
   isIP(str) {
-    return /((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d))/.test(
+    return /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/.test(
       str
     );
   }
@@ -330,7 +330,7 @@ export default class TypeFn {
    * @param {*} str
    * @returns {Boolean}
    */
-  isDate(str) {
+  isDateFormat(str) {
     return (
       /^(\d{4})\-(\d{2})\-(\d{2}) (\d{2})(?:\:\d{2}|:(\d{2}):(\d{2}))$/.test(
         str
@@ -362,7 +362,7 @@ export default class TypeFn {
    * @returns {Boolean}
    */
   isEnglish(str) {
-    return /^[A-Z]+$/.test(str);
+    return /^[a-zA-Z]+$/.test(str);
   }
 
   /**

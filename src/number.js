@@ -32,7 +32,7 @@ export default class NumberFn {
       '九',
       '十'
     );
-    var BB = new Array('', '十', '百', '仟', '萬', '億', '点', '');
+    var BB = new Array('', '十', '百', '千', '万', '亿', '点', '');
     var a = ('' + num).replace(/(^0*)/g, '').split('.'),
       k = 0,
       re = '';
