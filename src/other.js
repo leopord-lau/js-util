@@ -1,3 +1,9 @@
+import CryptoJS from 'crypto-js';
+// 十六位十六进制数作为密钥
+const SECRET_KEY = CryptoJS.enc.Utf8.parse("3333e6e143439161");
+// 十六位十六进制数作为密钥偏移量
+const SECRET_IV = CryptoJS.enc.Utf8.parse("e3bbe7e3ba84431a");
+
 export default class OtherFn {
   /**
    * 深克隆
@@ -112,5 +118,46 @@ export default class OtherFn {
         prev = Date.now();
       }
     };
+  }
+
+  /**
+   * 数据加密
+   * @param {*} data 
+   * @param {String} key 密钥
+   * @param {String} iv  密钥偏移量
+   * @returns {String}
+   */
+   encrypt(data, key = SECRET_KEY, iv = SECRET_IV) {
+    if(typeFn.isObj(data)) {
+      data = JSON.stringify(data);
+    }
+
+    const dataHex = CryptoJS.enc.Utf8.parse(data);
+    const encrypted = CryptoJS.AES.encrypt(dataHex, key, {
+      iv: iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7
+    });
+
+    return encrypted.ciphertext.toString();
+  }
+
+  /**
+   * 数据解密，解密的密钥跟密钥偏移量要跟加密时的保持一致
+   * @param {*} data 
+   * @param {String} key 密钥
+   * @param {String} iv  密钥偏移量
+   * @returns 
+   */
+  decrypt(data, key = SECRET_KEY, iv = SECRET_IV) {
+    const encryptedHexStr = CryptoJS.enc.Hex.parse(data);
+    const str = CryptoJS.enc.Base64.stringify(encryptedHexStr);
+    const decrypt = CryptoJS.AES.decrypt(str, key, {
+      iv: iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7
+    });
+    const decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
+    return decryptedStr.toString();
   }
 }
