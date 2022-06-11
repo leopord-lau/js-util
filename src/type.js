@@ -18,6 +18,29 @@ export default class TypeFn {
   }
 
   /**
+   * 字符串中是否只包含数字
+   * @param {*} obj 
+   * @returns {Boolean}
+   */
+  isNumberOnly(obj) {
+    if(this.isString(obj) || this.isNumber(obj)) {
+      return this.isNumber(obj) || /^[0-9]+$/.test(obj);
+    } else {
+      console.warn('传入参数非string或者number类型');
+      return false;
+    }
+  }
+
+  /**
+   * 将值转换成数字类型，如果转换后是NAN，返回0
+   * @param {*} obj 
+   * @returns 
+   */
+  assertNumber(obj) {
+    return Number(obj) === NaN ? 0 : Number(obj);
+  }
+
+  /**
    * 是否是布尔类型
    * @param {*} obj
    * @returns {Boolean}
