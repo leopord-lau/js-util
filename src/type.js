@@ -24,9 +24,10 @@ export default class TypeFn {
    */
   isNumberOnly(obj) {
     if(this.isString(obj) || this.isNumber(obj)) {
+
       return this.isNumber(obj) || /^[0-9]+$/.test(obj);
     } else {
-      console.warn('传入参数非string或者number类型');
+      console.log('传入参数非string或者number类型');
       return false;
     }
   }
