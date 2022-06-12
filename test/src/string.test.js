@@ -38,3 +38,7 @@ test('changeCase type 4', () => {
 test('randomString', () => {
   expect(stringFn.randomString(4))
 })
+
+test('convertToCamelCase', () => {
+  expect(stringFn.convertToCamelCase('a-string')).toBe('aString')
+})

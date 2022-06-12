@@ -6,6 +6,22 @@ test('random 传入参数小于2个', () => {
   expect(arrayFn.random()).toBeNull();
 })
 
+test('formatInToThousand example 1', () => {
+  expect(arrayFn.formatInToThousand('2')).toBe('2');
+})
+
+test('formatInToThousand example 2', () => {
+  expect(arrayFn.formatInToThousand('1234')).toBe('1.234');
+})
+
+test('formatInToThousand example 3', () => {
+  expect(arrayFn.formatInToThousand(1234)).toBe('1.234');
+})
+
+test('formatInToThousand example 4', () => {
+  expect(arrayFn.formatInToThousand(1234, '-')).toBe('1-234');
+})
+
 test('numberToChinese 2', () => {
   expect(arrayFn.numberToChinese(2)).toStrictEqual('二')
 })

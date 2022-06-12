@@ -54,3 +54,11 @@ test('intersect', () => {
 test('sort', () => {
   expect(arrayFn.sort(arr, -1)).toStrictEqual([5, 4, 4, 3, 2]);
 });
+
+test('flatten example 1', () => {
+  expect(arrayFn.flatten([1, [2]])).toStrictEqual([1, 2])
+})
+
+test('flatten example 2', () => {
+  expect(arrayFn.flatten([1, [2, [3]]])).toStrictEqual([1, 2, 3])
+})

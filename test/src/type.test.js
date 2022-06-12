@@ -135,6 +135,14 @@ test('isDateFormat', () => {
   expect(typeFn.isDateFormat('2022-06-09')).toBeTruthy();
 })
 
+test('isIPv6 example 1', () => {
+  expect(typeFn.isIPv6('20220609')).not.toBeTruthy();
+})
+
+test('isIPv6 example 2', () => {
+  expect(typeFn.isIPv6('fe80:0000:0001:0000:0440:44ff:1233:5678')).toBeTruthy();
+})
+
 test('isCardId', () => {
   expect(typeFn.isCardID('20220609')).not.toBeTruthy();
 })
