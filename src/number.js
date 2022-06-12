@@ -14,6 +14,27 @@ export default class NumberFn {
   }
 
   /**
+   * 千位分隔符
+   * @param {Number | String} number 
+   * @param {*} separator 
+   * @returns {String}
+   */
+  formatInToThousand(number, separator = '.') {
+    let numStr = number.toString();
+    let length = numStr.length;
+    if(length <= 3) {
+        return numStr;
+    } else {
+      let remain = length % 3;
+      if(remain > 0) {
+        return numStr.slice(0, remain) + separator + numStr.slice(remain, length).match(/\d{3}/g)?.join(separator);
+      } else {
+        return numStr.slice(0, length).match(/\d{3}/g).join(separator);
+      }
+    }
+  }
+
+  /**
    * 将阿拉伯数字翻译成中文的大写数字
    * @param {Number} num
    * @returns {String}

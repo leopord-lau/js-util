@@ -408,6 +408,20 @@ export default class TypeFn {
   }
 
   /**
+   * 是否是ipv6格式
+   * @param {*} str
+   * @returns {Boolean}
+   */
+  isIPv6(str) {
+    return str.match(/:/g) ? 
+        ((str.match(/:/g))).length <= 7 
+        :
+        false
+        &&
+        /::/.test(str)?/^([\da-f]{1,4}(:|::)){1,6}[\da-f]{1,4}$/i.test(str):/^([\da-f]{1,4}:){7}[\da-f]{1,4}$/i.test(str);
+  }
+
+  /**
    * 验证身份证号
    * @param {*} obj
    * @returns

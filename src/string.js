@@ -74,4 +74,13 @@ export default class StringFn {
       result += chars[Math.floor(Math.random() * chars.length)];
     return result;
   };
+
+  /**
+   * 将短横线格式转换成驼峰式
+   * @param {*} str 
+   * @returns 
+   */
+   convertToCamelCase(str) {
+    return str.replace(/-[a-z]/g, (i) => i.substr(1).toUpperCase());
+  }
 }

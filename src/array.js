@@ -152,4 +152,43 @@ export default class ArrayFn {
       }
     });
   }
+
+  /**
+   * 数组扁平化
+   * @param {Array} arr 
+   * @returns 
+   */
+  flatten(arr) {
+    let result = [];
+    for(let i = 0; i < arr.length; i++) {
+      if(Array.isArray(arr[i])) {
+        result = result.concat(this.flatten(arr[i]));
+      } else {
+        result.push(arr[i]);
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 数组内元素随机交换
+   * @param {Array} arr 
+   * @returns {Array}
+   */
+  shuffle(arr) {
+    for(let i = 0; i < arr.length; i++) {
+        const randomIndex = Math.round(Math.random() * (arr.length - 1 - i)) + i;
+        [arr[i], arr[randomIndex]] = [arr[randomIndex], arr[i]];
+    }
+    return arr;
+  }
+
+  /**
+   * 数组内元素随机生成
+   * @param {Array} arr 
+   * @returns {Array}
+   */
+  randomInArray (arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
 }
