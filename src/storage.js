@@ -10,16 +10,17 @@ export default class StorageFn {
     this.prefix = config.prefix ? config.prefix : undefined;
     // 默认不加密
     this.isEncrypt = config.isEncrypt ? config.isEncrypt : false;
-  }
 
-  /**
-   * 自动给key添加前缀
-   * @param {*} key 
-   * @returns 
-   */
-  static addPrefix(key) {
-    const prefix = this.prefix ? `${this.prefix}_` : '';
-    return prefix + key;
+    // 私有方法，并不暴露在原型链上
+    this.addPrefix = StorageFn.addPrefix.bind(this); 
+    this.setStorage = StorageFn.setStorage.bind(this);
+    this.getStorage = StorageFn.getStorage.bind(this);
+    this.hasStorage = StorageFn.hasStorage.bind(this);
+    this.getStorageKeys = StorageFn.getStorageKeys.bind(this);
+    this.getAllStorage = StorageFn.getAllStorage.bind(this);
+    this.getStorageLength = StorageFn.getStorageLength.bind(this);
+    this.removeStorage = StorageFn.removeStorage.bind(this);
+    this.clearStorage = StorageFn.clearStorage.bind(this);
   }
 
   /**
@@ -28,19 +29,19 @@ export default class StorageFn {
    * @param {*} value
    * @param {String | Number} day cookie保存天数
    */
-  setCookie(key, value, day) {
+  setCookie(key, value, day = 0) {
     if(arguments.length === 2) {
       if(typeFn.isObj(arguments[0]) && typeFn.isNumberOnly(arguments[1])) {
         for (let i in key) {
           const date = new Date();
           date.setDate(date.getDate() + typeFn.assertNumber(arguments[1]));
-          document.cookie = StorageFn.addPrefix(i) + '=' + key[i] + ';expires=' + date;
+          document.cookie = this.addPrefix(i) + '=' + key[i] + ';expires=' + date;
         }
       }
     } else {
       const date = new Date();
       date.setDate(date.getDate() + typeFn.assertNumber(day));
-      document.cookie = StorageFn.addPrefix(key) + '=' + value + ';expires=' + date;
+      document.cookie = this.addPrefix(key) + '=' + value + ';expires=' + date;
     }
   }
 
@@ -50,7 +51,7 @@ export default class StorageFn {
    * @returns {String}
    */
   getCookie(key) {
-    key = StorageFn.addPrefix(key);
+    key = this.addPrefix(key);
     const arr = document.cookie.split('; ');
     for (let i = 0; i < arr.length; i++) {
       const arr2 = arr[i].split('=');
@@ -66,7 +67,7 @@ export default class StorageFn {
    * @param {*} key
    */
   removeCookie(key) {
-    this.setCookie(StorageFn.addPrefix(key), 1, -1);
+    this.setCookie(key, 1, -1);
   }
 
   /**
@@ -76,7 +77,11 @@ export default class StorageFn {
    * @param {String | Number} expire 保存天数; 默认为0，不会过期; 如果解析后的值为NaN，也默认设置不过期
    */
   setLocal(key, value, expire = 0) {
-    StorageFn.setStorage('localStorage', key, value, expire);
+    if(arguments.length === 1 || arguments.length === 2) {
+      this.setStorage('localStorage', key, expire);
+    } else {
+      this.setStorage('localStorage', key, value, expire);
+    }
   }
 
   /**
@@ -85,7 +90,7 @@ export default class StorageFn {
    * @returns {String | null}
    */
   getLocal(key) {
-    return StorageFn.setStorage('localStorage', key);
+    return this.getStorage('localStorage', key);
   }
 
   /**
@@ -94,7 +99,7 @@ export default class StorageFn {
    * @returns {Boolean}
    */
   hasLocal(key) {
-    return StorageFn.hasStorage('localStorage', key);
+    return this.hasStorage('localStorage', key);
   }
 
   /**
@@ -102,7 +107,7 @@ export default class StorageFn {
    * @returns {Array}
    */
   getLocalKeys() {
-    return StorageFn.getStorageKeys('localStorage');
+    return this.getStorageKeys('localStorage');
   }
 
   /**
@@ -110,7 +115,7 @@ export default class StorageFn {
    * @returns {Array}
    */
   getAllLocal() {
-    return StorageFn.getAllStorage('localStorage');
+    return this.getAllStorage('localStorage');
   }
 
   /**
@@ -118,7 +123,7 @@ export default class StorageFn {
    * @returns {Number}
    */
   getLocalLength() {
-    return StorageFn.getStorageLength('localStorage');
+    return this.getStorageLength('localStorage');
   }
 
   /**
@@ -126,24 +131,28 @@ export default class StorageFn {
    * @param {*} key
    */
   removeLocal(key) {
-    StorageFn.removeStorage('localStorage', key);
+    this.removeStorage('localStorage', key);
   }
 
   /**
    * 移除所有localStorage
    */
   clearLocal() {
-    StorageFn.clearStorage('localStorage');
+    this.clearStorage('localStorage');
   }
 
   /**
-   * 设置sessionStorage
+   * 设置sessionStorage, 当网页关闭时自动删除session，不做额外处理
    * @param {*} key
    * @param {*} value
    * @param {String | Number} expire 保存天数; 默认为0，不会过期; 如果解析后的值为NaN，也默认设置不过期
    */
    setSession(key, value, expire = 0) {
-    StorageFn.setStorage('sessionStorage', key, value, expire);
+    if(arguments.length === 1 || arguments.length === 2) {
+      this.setStorage('sessionStorage', key, expire);
+    } else {
+      this.setStorage('sessionStorage', key, value, expire);
+    }
   }
 
   /**
@@ -152,7 +161,7 @@ export default class StorageFn {
    * @returns {String | null}
    */
   getSession(key) {
-    return StorageFn.setStorage('sessionStorage', key);
+    return this.getStorage('sessionStorage', key);
   }
 
   /**
@@ -161,7 +170,7 @@ export default class StorageFn {
    * @returns {Boolean}
    */
   hasSession(key) {
-    return StorageFn.hasStorage('sessionStorage', key);
+    return this.hasStorage('sessionStorage', key);
   }
 
   /**
@@ -169,7 +178,7 @@ export default class StorageFn {
    * @returns {Array}
    */
   getSessionKeys() {
-    return StorageFn.getStorageKeys('sessionStorage');
+    return this.getStorageKeys('sessionStorage');
   }
 
   /**
@@ -177,7 +186,7 @@ export default class StorageFn {
    * @returns {Array}
    */
   getAllSession() {
-    return StorageFn.getAllStorage('sessionStorage');
+    return this.getAllStorage('sessionStorage');
   }
 
   /**
@@ -185,7 +194,7 @@ export default class StorageFn {
    * @returns {Number}
    */
   getSessionLength() {
-    return StorageFn.getStorageLength('sessionStorage');
+    return this.getStorageLength('sessionStorage');
   }
 
   /**
@@ -193,16 +202,25 @@ export default class StorageFn {
    * @param {*} key
    */
   removeSession(key) {
-    StorageFn.removeStorage('sessionStorage', key);
+    this.removeStorage('sessionStorage', key);
   }
 
   /**
    * 移除所有SessionStorage
    */
   clearSession() {
-    StorageFn.clearStorage('sessionStorage');
+    this.clearStorage('sessionStorage');
   }
 
+  /**
+   * 自动给key添加前缀
+   * @param {*} key 
+   * @returns 
+   */
+   static addPrefix(key) {
+    const prefix = this.prefix ? `${this.prefix}_` : '';
+    return prefix + key;
+  }
 
   /**
    * 设置storage
@@ -211,23 +229,23 @@ export default class StorageFn {
    * @param {String | Number} expire 保存天数; 默认为0，不会过期; 如果解析后的值为NaN，也默认设置不过期
    */
   static setStorage(type, key, value, expire) {
-    if(arguments.length === 2) {
-      if(typeFn.isObj(arguments[0])) {
-        if(typeFn.isNumberOnly(arguments[1])) {
+    if(arguments.length === 3) {
+      if(typeFn.isObj(arguments[1])) {
+        if(!typeFn.isNumberOnly(arguments[2])) {
           throw new Error('Expire must be a number');
         }
-        for (var i in arguments[0]) {
+        for (var i in arguments[1]) {
           const data = {
-            value: arguments[0][i],
+            value: arguments[1][i],
             timeStamp: new Date().getTime(),
-            expire: expire * 60 * 1000 * 60 *24
+            expire: arguments[2] * 60 * 1000 * 60 *24
           }
           const encryptData = this.isEncrypt ? otherFn.encrypt(data) : JSON.stringify(data);
-          window[type].setItem(StorageFn.addPrefix(i), encryptData);
+          window[type].setItem(this.addPrefix(i), encryptData);
         }
       }
     } else {
-      if(typeFn.isNumberOnly(expire)) {
+      if(!typeFn.isNumberOnly(expire)) {
         throw new Error('Expire must be a number');
       }
       const data = {
@@ -236,7 +254,7 @@ export default class StorageFn {
         expire: expire * 60 * 1000 * 60 *24
       }
       const encryptData = this.isEncrypt ? otherFn.encrypt(data) : JSON.stringify(data);
-      window[key].setItem(StorageFn.addPrefix(key), encryptData);
+      window[type].setItem(this.addPrefix(key), encryptData);
     }
   }
 
@@ -248,13 +266,13 @@ export default class StorageFn {
    * @returns {String | null}
    */
    static getStorage(type, key) {
-    key = StorageFn.addPrefix(key);
-    if(window[type].getItem(key) || JSON.stringify(window[type].getItem(key)) === 'null') {
+    key = this.addPrefix(key);
+    
+    if(!window[type].getItem(key)) {
       return null;
     }
 
-    const data = this.isEncrypt ? JSON.parse(this.decrypt(window[type].getItem(StorageFn.addPrefix(key)))) : JSON.parse(window[type].getItem(key));
-
+    const data = this.isEncrypt ? JSON.parse(otherFn.decrypt(window[type].getItem(key))) : JSON.parse(window[type].getItem(key));
     if(data.expire === 0) {
       return data.value;
     } else {
@@ -274,9 +292,8 @@ export default class StorageFn {
    * @returns {Boolean}
    */
    static hasStorage(type, key) {
-    key = StorageFn.addPrefix(key);
-    const arr = this.getLocalKeys(type).filter(item => {
-      return item.key === key;
+    const arr = this.getStorageKeys(type).filter(item => {
+      return item === key;
     })
     return arr.length ? true : false;
   }
@@ -288,9 +305,9 @@ export default class StorageFn {
    */
   static getStorageKeys(type) {
     const keys = [];
-    let locals = this.getAllLocal(type);
-    for(let i = 0; i < locals.length; i ++) {
-      keys.push(locals[i].key);
+    let storages = this.getAllStorage(type);
+    for(let i = 0; i < storages.length; i ++) {
+      keys.push(storages[i].key);
     }
     return keys;
   }
@@ -305,8 +322,8 @@ export default class StorageFn {
     const arr = [];
     for(let i = 0; i < length; i++) {
       const key = window[type].key(i);
-      const value = window[type].getItem(key);
-      arr.push({key, value});
+      const value = this.isEncrypt ? JSON.parse(otherFn.decrypt(window[type].getItem(key))) : window[type].getItem(key);
+      arr.push({key: window[type].key(i).substring(this.prefix.length + 1), value: value.value});
     }
     return arr;
   }
@@ -326,7 +343,7 @@ export default class StorageFn {
    * @param {*} key
    */
   static removeStorage(type, key) {
-    window[type].removeItem(StorageFn.addPrefix(key));
+    window[type].removeItem(this.addPrefix(key));
   }
 
   /**
