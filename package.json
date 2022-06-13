@@ -1,8 +1,8 @@
 {
-  "name": "js-util",
+  "name": "js-utils",
   "version": "1.0.0",
   "description": "js 常用工具封装",
-  "main": "./dist/jsUtil.min.js",
+  "main": "./dist/jsUtils.min.js",
   "directories": {
     "test": "test"
   },
@@ -18,7 +18,7 @@
   },
   "scripts": {
     "test": "npx jest",
-    "build:": "npx rollup -c ./rollup.config.js"
+    "build": "npx rollup -c ./rollup.config.js"
   },
   "repository": {
     "type": "git",
@@ -34,10 +34,10 @@
     "url": "https://github.com/leopord-lau/js-util/issues"
   },
   "homepage": "https://github.com/leopord-lau/js-util#readme",
-  "unpkg": "dist/jsUtil.min.js",
+  "unpkg": "dist/jsUtils.min.js",
   "bundlesize": [
     {
-      "path": "./dist/jsUtil.min.js",
+      "path": "./dist/jsUtils.min.js",
       "threshold": "16kB"
     }
   ]

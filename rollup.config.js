@@ -1,6 +1,6 @@
 const lib = require('./package.json');
 const {terser} = require("rollup-plugin-terser");
-const outputFileName = 'jsUtil'
+const outputFileName = 'jsUtils'
 const input = './src/index.js'
 
 const buildConfig = (config) => {
