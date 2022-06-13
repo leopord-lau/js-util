@@ -1,19 +1,44 @@
 {
-  "name": "npmpublic",
+  "name": "js-util",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "npx jest"
+  "description": "js 常用工具封装",
+  "main": "./dist/jsUtil.min.js",
+  "directories": {
+    "test": "test"
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.18.2",
     "@babel/preset-env": "^7.18.2",
     "babel-jest": "^28.1.1",
     "crypto-js": "^4.1.1",
     "jest": "^28.1.0",
-    "jest-environment-jsdom": "^28.1.1"
-  }
+    "jest-environment-jsdom": "^28.1.1",
+    "rollup": "^2.75.6",
+    "rollup-plugin-terser": "^7.0.2"
+  },
+  "scripts": {
+    "test": "npx jest",
+    "build:": "npx rollup -c ./rollup.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leopord-lau/js-util.git"
+  },
+  "keywords": [
+    "js",
+    "utils"
+  ],
+  "author": "leo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leopord-lau/js-util/issues"
+  },
+  "homepage": "https://github.com/leopord-lau/js-util#readme",
+  "unpkg": "dist/jsUtil.min.js",
+  "bundlesize": [
+    {
+      "path": "./dist/jsUtil.min.js",
+      "threshold": "16kB"
+    }
+  ]
 }
