@@ -6,12 +6,12 @@ import DateFn from './date';
 import StorageFn from './storage';
 
 const install = (prefix="_default", isEncrypt=true) => {
-  Array.prototype._jsUtil = new ArrayFn();
-  Number.prototype._jsUtil = new NumberFn();
-  String.prototype._jsUtil = new StringFn();
-  Date.prototype._jsUtil = new DateFn();
-  Object.prototype._jsUtil = new TypeFn();
-  Storage.prototype._jsUtil = new StorageFn({
+  Array.prototype._jsUtils = new ArrayFn();
+  Number.prototype._jsUtils = new NumberFn();
+  String.prototype._jsUtils = new StringFn();
+  Date.prototype._jsUtils = new DateFn();
+  Object.prototype._jsUtils = new TypeFn();
+  Storage.prototype._jsUtils = new StorageFn({
     prefix,
     isEncrypt
   });
