@@ -43,9 +43,9 @@ export default class DateFn {
   /**
    * 返回指定长度的月份集合
    *
-   * @param  {time} 时间
-   * @param  {len} 长度
-   * @param  {direction} 方向：  1: 前几个月;  2: 后几个月;  3:前后几个月  默认 3
+   * @param  {Number | String} time 时间
+   * @param  {Number} len 长度
+   * @param  {Number} direction 方向：  1: 前几个月;  2: 后几个月;  3:前后几个月  默认 3
    * @return {Array} 数组
    *
    * @example   getMonths('2018-1-29', 6, 1)  // ->  ["2018-1", "2017-12", "2017-11", "2017-10", "2017-9", "2017-8", "2017-7"]
@@ -114,9 +114,9 @@ export default class DateFn {
   /**
    * 返回指定长度的天数集合
    *
-   * @param  {time} 时间
-   * @param  {len} 长度
-   * @param  {direction} 方向： 1: 前几天;  2: 后几天;  3:前后几天  默认 3
+   * @param  {Number | String} time 时间
+   * @param  {Number} len 长度
+   * @param  {Number} diretion 方向： 1: 前几天;  2: 后几天;  3:前后几天  默认 3
    * @return {Array} 数组
    *
    * @example date.getDays('2018-1-29', 6) // -> ["2018-1-26", "2018-1-27", "2018-1-28", "2018-1-29", "2018-1-30", "2018-1-31", "2018-2-1"]
@@ -161,7 +161,8 @@ export default class DateFn {
   }
 
   /**
-   * @param  {s} 秒数
+   * 将秒数转换成 1h1m1s格式
+   * @param  {Number} s 秒数
    * @return {String} 字符串
    *
    * @example formatHMS(3610) // -> 1h0m10s
@@ -184,7 +185,11 @@ export default class DateFn {
     return str;
   }
 
-  /*获取某月有多少天*/
+  /**
+   * 获取某月有多少天
+   * @param {Number | String} time 
+   * @returns 
+   */
   getMonthOfDay(time) {
     var date = new Date(time);
     var year = date.getFullYear();
@@ -216,7 +221,11 @@ export default class DateFn {
     return days;
   }
 
-  /*获取某年有多少天*/
+  /**
+   * 获取某年有多少天
+   * @param {Number | String} time 
+   * @returns 
+   */
   getYearOfDay(time) {
     var firstDayYear = this.getFirstDayOfYear(time);
     var lastDayYear = this.getLastDayOfYear(time);
@@ -226,13 +235,21 @@ export default class DateFn {
     return Math.ceil(numSecond / (24 * 3600));
   }
 
-  /*获取某年的第一天*/
+  /**
+   * 获取某年的第一天
+   * @param {Number | String} time 
+   * @returns 
+   */
   getFirstDayOfYear(time) {
     var year = new Date(time).getFullYear();
     return year + '-01-01 00:00:00';
   }
 
-  /*获取某年最后一天*/
+  /**
+   * 获取某年的最后一天
+   * @param {Number | String} time 
+   * @returns 
+   */
   getLastDayOfYear(time) {
     var year = new Date(time).getFullYear();
     var dateString = year + '-12-01 00:00:00';
@@ -240,7 +257,11 @@ export default class DateFn {
     return year + '-12-' + endDay + ' 23:59:59';
   }
 
-  /*获取某个日期是当年中的第几天*/
+  /**
+   * 获取某个日期是当年中的第几天
+   * @param {Number | String} time 
+   * @returns 
+   */
   getDayOfYear(time) {
     var firstDayYear = this.getFirstDayOfYear(time);
     var numSecond =
@@ -248,7 +269,11 @@ export default class DateFn {
     return Math.ceil(numSecond / (24 * 3600));
   }
 
-  /*获取某个日期在这一年的第几周*/
+  /**
+   * 获取某个日期在这一年的第几周
+   * @param {Number | String} time 
+   * @returns 
+   */
   getDayOfYearWeek(time) {
     var numdays = this.getDayOfYear(time);
     return Math.ceil(numdays / 7);
