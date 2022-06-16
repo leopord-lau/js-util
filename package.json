@@ -1,6 +1,6 @@
 {
   "name": "js-utils-leo",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "js 常用工具封装",
   "main": "./dist/jsUtils.min.js",
   "directories": {
