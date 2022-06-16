@@ -1,6 +1,38 @@
-# js-utils
+# js-utils-leo
 
 js 常用工具封装，将这些方法分类成`array`，`date`，`number`，`storage`，`string`，`type`，`other`这些类型。
+
+## 使用
+
+使用`npm`安装
+
+```shell
+npm i js-utils-leo
+```
+
+在项目中使用
+```js
+import { install, TypeFn, OtherFn } from 'js-utils-leo';
+install();
+
+const typeFn = new TypeFn();
+typeFn.isFalse(0);
+```
+
+调用`install`方法，直接将`ArrayFn`，`DateFn`、`NumberFn`、`Storage`、`StringFn`这些实例添加到对应的原型上。不需要手动初始化。
+```js
+  Array.prototype._jsUtils = new ArrayFn();
+  Number.prototype._jsUtils = new NumberFn();
+  String.prototype._jsUtils = new StringFn();
+  Date.prototype._jsUtils = new DateFn();
+  Object.prototype._jsUtils = new TypeFn();
+  Storage.prototype._jsUtils = new StorageFn({
+    prefix,
+    isEncrypt
+  });
+```
+
+如果想在`node`中使用，请勿实例化`StorageFn`。
 
 ## array
 
