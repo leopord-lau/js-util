@@ -22,6 +22,7 @@ export default class StringFn {
   }
 
   /**
+   * 改变字符大小写
    * @param  {String} str
    * @param {Number} type  1:首字母大写  2：首页母小写  3：大小写转换  4：全部大写  5：全部小写
    * @return {String}
@@ -66,7 +67,7 @@ export default class StringFn {
    * @param {Number} length
    * @returns
    */
-  randomString = function (length) {
+  randomString(length) {
     const chars =
       '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let result = '';
